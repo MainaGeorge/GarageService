@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-info mt-2 mb-2">Adding a new Service</h1>
+<h1 class="text-info mt-2 mb-2">Editing @Model.ServiceType.Name</h1>
 
 <form method="post">
     <div class="whitebackground border">
@@ -15,7 +15,7 @@
                 <label asp-for="ServiceType.Name">Name</label>
             </div>
             <div class="col-5">
-                <input type="text" class="form-control" asp-for="ServiceType.Name" />
+                <input type="text" class="form-control" autocomplete="off" asp-for="ServiceType.Name" />
                 <span asp-validation-for="ServiceType.Name" class="text-danger d-block"></span>
             </div>
         </div>
@@ -24,7 +24,7 @@
                 <label asp-for="ServiceType.Price">Price</label>
             </div>
             <div class="col-5">
-                <input type="text" class="form-control" asp-for="ServiceType.Price" />
+                <input type="text" class="form-control" autocomplete="off" asp-for="ServiceType.Price" />
                 <span asp-validation-for="ServiceType.Price" class="text-danger d-block"></span>
 
             </div>

@@ -14,7 +14,7 @@
                 <label asp-for="ServiceType.Name">Name</label>
             </div>
             <div class="col-5">
-                <input type="text" class="form-control" asp-for="ServiceType.Name" value="" />
+                <input type="text" class="form-control" autocomplete="off" asp-for="ServiceType.Name" value="" />
                 <span asp-validation-for="ServiceType.Name" class="text-danger d-block"></span>
             </div>
         </div>
@@ -23,7 +23,7 @@
                 <label asp-for="ServiceType.Price">Price</label>
             </div>
             <div class="col-5">
-                <input type="text" class="form-control" asp-for="ServiceType.Price" value="" />
+                <input type="text" class="form-control" autocomplete="off" asp-for="ServiceType.Price" value="" />
                 <span asp-validation-for="ServiceType.Price" class="text-danger d-block"></span>
 
             </div>

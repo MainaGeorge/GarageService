@@ -7,11 +7,11 @@ using SparkAuto.Models;
 
 namespace SparkAuto.Pages.ServiceTypes
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _db;
 
-        public EditModel(ApplicationDbContext db)
+        public DeleteModel(ApplicationDbContext db)
         {
             _db = db;
         }
@@ -26,7 +26,7 @@ namespace SparkAuto.Pages.ServiceTypes
                 return NotFound();
             }
 
-            ServiceType = await _db.ServiceType.FirstOrDefaultAsync(m => m.Id == serviceId);
+            ServiceType = await _db.ServiceType.FirstOrDefaultAsync(s => s.Id == serviceId);
 
             if (ServiceType == null)
             {
@@ -35,20 +35,14 @@ namespace SparkAuto.Pages.ServiceTypes
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            
+            ServiceType = await _db.ServiceType.FindAsync(ServiceType.Id);
 
+            if (ServiceType == null) return RedirectToPage("./Index");
 
-            var dbService = await _db.ServiceType.FirstOrDefaultAsync(m => m.Id == ServiceType.Id);
-            dbService.Name = ServiceType.Name;
-            dbService.Price = ServiceType.Price;
-
+            _db.ServiceType.Remove(ServiceType);
             await _db.SaveChangesAsync();
 
             return RedirectToPage("./Index");
