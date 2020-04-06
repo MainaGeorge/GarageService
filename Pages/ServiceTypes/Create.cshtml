@@ -1,0 +1,43 @@
+﻿@page
+@model SparkAuto.Pages.ServiceTypes.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-info mt-2 mb-2">Adding a new Service</h1>
+
+<form method="post">
+    <div class="whitebackground border">
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ServiceType.Name">Name</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" asp-for="ServiceType.Name" value="" />
+                <span asp-validation-for="ServiceType.Name" class="text-danger d-block"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ServiceType.Price">Price</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" asp-for="ServiceType.Price" value="" />
+                <span asp-validation-for="ServiceType.Price" class="text-danger d-block"></span>
+
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-2 col-5">
+                <partial name="Shared/_CreateAndBackToListButtons" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("Shared/_ValidationScriptsPartial"); }
+}
