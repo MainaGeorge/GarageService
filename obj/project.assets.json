@@ -9011,11 +9011,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\genag\\OneDrive\\Desktop\\spark\\SparkAuto\\SparkAuto.csproj",
+      "projectUniqueName": "C:\\Users\\genag\\OneDrive\\Desktop\\GarageService\\SparkAuto.csproj",
       "projectName": "SparkAuto",
-      "projectPath": "C:\\Users\\genag\\OneDrive\\Desktop\\spark\\SparkAuto\\SparkAuto.csproj",
+      "projectPath": "C:\\Users\\genag\\OneDrive\\Desktop\\GarageService\\SparkAuto.csproj",
       "packagesPath": "C:\\Users\\genag\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\genag\\OneDrive\\Desktop\\spark\\SparkAuto\\obj\\",
+      "outputPath": "C:\\Users\\genag\\OneDrive\\Desktop\\GarageService\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\genag\\AppData\\Roaming\\NuGet\\NuGet.Config",

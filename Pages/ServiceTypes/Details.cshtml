@@ -1,0 +1,43 @@
+﻿@page "/Details/{serviceId:int?}"
+@model SparkAuto.Pages.ServiceTypes.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-4 text-muted">@Model.ServiceType.Name Full Available Details</h1>
+
+<form method="post">
+    <div class="whitebackground border">
+        <input type="hidden" asp-for="ServiceType.Id" />
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ServiceType.Name">Name</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" disabled="disabled" asp-for="ServiceType.Name" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="ServiceType.Price">Price</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" disabled="disabled" asp-for="ServiceType.Price" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-2 col-5">
+                <div class="row">
+                    <div class="col-6">
+                        <a asp-page="./Edit" class="btn btn-info form-control" asp-route-serviceId="@Model.ServiceType.Id">Edit</a>
+                    </div>
+                    <div class="col-6">
+                        <a asp-page="./Index" class="btn btn-success form-control">Back to Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
