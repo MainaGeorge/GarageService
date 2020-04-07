@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using SparkAuto.Data;
+using SparkAuto.Models;
+using SparkAuto.StaticDetailsUtilities;
 
 namespace SparkAuto.Areas.Identity.Pages.Account
 {
@@ -22,18 +24,24 @@ namespace SparkAuto.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _db;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        // private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            ApplicationDbContext db)
+        // IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            _db = db;
+            _roleManager = roleManager;
+            // _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -60,6 +68,16 @@ namespace SparkAuto.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            public string Name { get; set; }
+            public string Address { get; set; }
+            public string PostalAddress { get; set; }
+            public string City { get; set; }
+
+
+            [Required]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -70,14 +88,42 @@ namespace SparkAuto.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                {
+                    Name = Input.Name,
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    City = Input.City,
+                    PhoneNumber = Input.PhoneNumber,
+                    Address = Input.Address,
+                    PostalAddress = Input.PostalAddress
+
+                };
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
+
+                    //create an admin role if it doesn't exist
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.AdminEndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.AdminEndUser));
+                    }
+
+                    //create customer role if it doesn't exist
+                    if (!await _roleManager.RoleExistsAsync(StaticDetails.CustomerEndUser))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(StaticDetails.CustomerEndUser));
+                    }
+
+                    await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -88,8 +134,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
