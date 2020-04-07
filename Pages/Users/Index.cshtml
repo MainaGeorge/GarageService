@@ -1,0 +1,52 @@
+﻿@page
+@model SparkAuto.Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<form>
+    <div class="border whitebackground">
+        <div class="row">
+            <div class="col-6">
+                <h2 class="text-info">Users</h2>
+            </div>
+            <div class="col-6 text-right d-flex align-items-center justify-content-end">
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-sm btn-info"><i class="fas fa-plus"></i>&nbsp;New User</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="whitebackground border">
+        <br /> <br />
+        <table class="table table-striped border">
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayNameFor(n => @Model.Users[0].Name)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(n => @Model.Users[0].Email)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(n => @Model.Users[0].PhoneNumber)
+                </td>
+                <td></td>
+
+            </tr>
+            @foreach (var user in @Model.Users)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => user.Name)</td>
+                    <td>@Html.DisplayFor(m => user.Email)</td>
+                    <td>@Html.DisplayFor(m => user.PhoneNumber)</td>
+                    <td style="width: 100px">
+                        <div class="btn-group">
+                            <a class="btn btn-success"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</form>
