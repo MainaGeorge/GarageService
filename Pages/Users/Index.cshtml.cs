@@ -24,20 +24,53 @@ namespace SparkAuto.Pages.Users
         {
             _db = db;
         }
-        public async Task<IActionResult> OnGet(int pageNumber = 1)
+        public async Task<IActionResult> OnGet(int pageNumber = 1, string searchPhone = null, string searchName = null, string searchEmail = null)
         {
             ViewModel = new PaginationViewModel
             {
                 ListOfUsers = await _db.ApplicationUser.ToListAsync()
             };
 
+            var currentUrl = new StringBuilder();
+            currentUrl.Append("/Users/Index?pageNumber=:");
+
+            if (searchEmail != null)
+            {
+                currentUrl.Append($"&searchEmail={searchEmail}");
+                ViewModel.ListOfUsers = ViewModel.ListOfUsers
+                    .Where(user => user.Email.ToLower().Contains(searchEmail.ToLower()))
+                    .ToList();
+            }
+            else
+            {
+                if (searchName != null)
+                {
+                    currentUrl.Append($"&searchName={searchName}");
+                    ViewModel.ListOfUsers = ViewModel.ListOfUsers
+                        .Where(user => user.Name.ToLower().Contains(searchName.ToLower()))
+                        .ToList();
+                }
+                else
+                {
+                    if (searchPhone != null)
+                    {
+                        currentUrl.Append($"&searchPhone={searchPhone}");
+                        ViewModel.ListOfUsers = ViewModel.ListOfUsers
+                            .Where(user => user.PhoneNumber.ToLower().Contains(searchPhone))
+                            .ToList();
+                    }
+                }
+            }
+
+
             ViewModel.PaginationDetails = new PaginationDetails
             {
                 CurrentPage = pageNumber,
                 TotalItems = ViewModel.ListOfUsers.Count,
                 ItemsPerPage = StaticDetails.UsersPerPage,
-                Url = "/Users/Index?pageNumber=:"
+                Url = currentUrl.ToString()
             };
+
 
             ViewModel.ListOfUsers = ViewModel.ListOfUsers.OrderBy(u => u.Email)
                 .Skip((pageNumber - 1) * StaticDetails.UsersPerPage)

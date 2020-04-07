@@ -1,0 +1,89 @@
+﻿@page "/Edit/{emailAddress}"
+@model SparkAuto.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="row whitebackground border my-auto mx-auto " style="width: 60%">
+    <div class="col-md-8">
+        <form method="post">
+            <input type="hidden" asp-for="User.Email" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="User.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="User.Name" class="form-control" />
+                        <span asp-validation-for="User.Name" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="User.PhoneNumber"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="User.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="User.PhoneNumber" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="User.Address"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="User.Address" class="form-control" />
+                        <span asp-validation-for="User.Address" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="User.PostalAddress"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="User.PostalAddress" class="form-control" />
+                        <span asp-validation-for="User.PostalAddress" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="User.City"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="User.City" class="form-control" />
+                        <span asp-validation-for="User.City" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-8">
+                        <button class="form-control btn btn-success" type="submit">Update</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
