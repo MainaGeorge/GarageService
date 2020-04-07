@@ -1,11 +1,12 @@
 ﻿@page
+
 @model SparkAuto.Pages.Users.IndexModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<form>
+<form method="get" , asp-page="Index">
     <div class="border whitebackground">
         <div class="row">
             <div class="col-6">
@@ -18,7 +19,31 @@
     </div>
 
     <div class="whitebackground border">
-        <br /> <br />
+        <div style="height: 60px;" class="container border border-secondary">
+            <div class="row">
+                <div class="col-11">
+                    <div class="row" style="padding-top: 10px">
+                        <div class="col-4">
+                            @Html.Editor("searchName",
+                                new { htmlAttributes = new { @class = "form-control", placeholder = "search by name", autocomplete = "off" } })
+                        </div>
+                        <div class="col-4">
+                            @Html.Editor("searchPhone",
+                                new { htmlAttributes = new { @class = "form-control", placeholder = "search by phone number", autocomplete = "off" } })
+                        </div>
+                        <div class="col-4">
+                            @Html.Editor("searchEmail",
+                                new { htmlAttributes = new { @class = "form-control", placeholder = "search by email", autocomplete = "off" } })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" style="padding-top: 10px"><button type="submit" class="btn btn-outline-success form-control"><i class="fas fa-search"></i></button></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="whitebackground border">
+        <br />
         <table class="table table-striped border">
             <tr class="table-secondary">
                 <th>
@@ -51,7 +76,6 @@
                 </tr>
             }
             <tr>
-
                 <td colspan="5" class="text-right">
                     <div class="btn-group" page-model="@Model.ViewModel.PaginationDetails" asp-action="Index" page-class="btn border"
                          page-class-normal="btn btn-light" page-class-selected="active btn btn-info"></div>

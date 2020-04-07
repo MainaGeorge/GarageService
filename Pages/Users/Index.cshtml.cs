@@ -31,15 +31,12 @@ namespace SparkAuto.Pages.Users
                 ListOfUsers = await _db.ApplicationUser.ToListAsync()
             };
 
-            var currentUrl = new StringBuilder();
-            currentUrl.Append("/Users/Index?pageNumber=:");
-
             ViewModel.PaginationDetails = new PaginationDetails
             {
                 CurrentPage = pageNumber,
                 TotalItems = ViewModel.ListOfUsers.Count,
                 ItemsPerPage = StaticDetails.UsersPerPage,
-                Url = currentUrl.ToString()
+                Url = "/Users/Index?pageNumber=:"
             };
 
             ViewModel.ListOfUsers = ViewModel.ListOfUsers.OrderBy(u => u.Email)
