@@ -972,5 +972,4 @@ C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ServiceTypes\Details.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ServiceTypes\Delete.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_DeleteAndBackToListButtons.cshtml.g.cs
-C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Users\Index.cshtml.g.cs

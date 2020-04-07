@@ -9,7 +9,7 @@
     <div class="border whitebackground">
         <div class="row">
             <div class="col-6">
-                <h2 class="text-info">Users</h2>
+                <h2 class="text-info">Customers</h2>
             </div>
             <div class="col-6 text-right d-flex align-items-center justify-content-end">
                 <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-sm btn-info"><i class="fas fa-plus"></i>&nbsp;New User</a>
@@ -21,19 +21,21 @@
         <br /> <br />
         <table class="table table-striped border">
             <tr class="table-secondary">
-                <td>
-                    @Html.DisplayNameFor(n => @Model.Users[0].Name)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(n => @Model.Users[0].Email)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(n => @Model.Users[0].PhoneNumber)
-                </td>
-                <td></td>
+                <th>
+                    @Html.DisplayNameFor(n => @Model.ViewModel.ListOfUsers[0].Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(n => @Model.ViewModel.ListOfUsers[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(n => @Model.ViewModel.ListOfUsers[0].PhoneNumber)
+                </th>
+                <th></th>
+                <th></th>
 
             </tr>
-            @foreach (var user in @Model.Users)
+
+            @foreach (var user in @Model.ViewModel.ListOfUsers)
             {
                 <tr>
                     <td>@Html.DisplayFor(m => user.Name)</td>
@@ -45,8 +47,16 @@
                             <a class="btn btn-danger text-white"><i class="fa fa-trash-alt"></i></a>
                         </div>
                     </td>
+                    <td></td>
                 </tr>
             }
+            <tr>
+
+                <td colspan="5" class="text-right">
+                    <div class="btn-group" page-model="@Model.ViewModel.PaginationDetails" asp-action="Index" page-class="btn border"
+                         page-class-normal="btn btn-light" page-class-selected="active btn btn-info"></div>
+                </td>
+            </tr>
         </table>
     </div>
 </form>
