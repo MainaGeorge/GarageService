@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "RDBCXWIgq/zIOYSr37Ws7DtZpThRpwqFZbXqtRtS58bIrvjjhZwVjMa9AtsWnf9XgVPcjHYNs7nKebMegadr4g==",
+  "dgSpecHash": "Eh7xI6yi2+HZhfpZEfKdFaZlKnfsMYTwOoX6iSHkWx0DkPaYXTbvpnbl9eJ587ms2O3yFoxjlj9Hqf0DH1cLew==",
   "success": true,
   "projectFilePath": "C:\\Users\\genag\\OneDrive\\Desktop\\GarageService\\SparkAuto.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\genag\\.nuget\\packages\\google.apis\\1.45.0\\google.apis.1.45.0.nupkg.sha512",
+    "C:\\Users\\genag\\.nuget\\packages\\google.apis.core\\1.45.0\\google.apis.core.1.45.0.nupkg.sha512",
+    "C:\\Users\\genag\\.nuget\\packages\\microsoft.aspnetcore.authentication.facebook\\3.1.3\\microsoft.aspnetcore.authentication.facebook.3.1.3.nupkg.sha512",
+    "C:\\Users\\genag\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\3.1.3\\microsoft.aspnetcore.authentication.google.3.1.3.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.3\\microsoft.aspnetcore.cryptography.internal.3.1.3.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.3\\microsoft.aspnetcore.cryptography.keyderivation.3.1.3.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\3.1.3\\microsoft.aspnetcore.diagnostics.entityframeworkcore.3.1.3.nupkg.sha512",
@@ -66,7 +70,7 @@
     "C:\\Users\\genag\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\genag\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\genag\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using SparkAuto.Data;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +26,20 @@ namespace SparkAuto
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication()
+                .AddFacebook(fb =>
+            {
+                fb.AppId = "337631200550285";
+                fb.AppSecret = "3795a07d0207fb7a825ee9cb757caaba";
+            }).AddGoogle(google =>
+            {
+                google.ClientId = "714806448953-dto39hf0g6n4dskh13hhpu5vfctr4t0k.apps.googleusercontent.com";
+                google.ClientSecret = "toriEyAkzGy4L2cCeQxGldzb";
+            });
+
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMvc();

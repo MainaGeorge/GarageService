@@ -4,6 +4,6 @@
     {
         public const string AdminEndUser = "Admin";
         public const string CustomerEndUser = "Customer";
-        public const int UsersPerPage = 2;
+        public const int UsersPerPage = 4;
     }
 }
