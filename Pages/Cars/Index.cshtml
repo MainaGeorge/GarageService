@@ -1,0 +1,108 @@
+﻿@page "/Index/{userId}"
+
+@using SparkAuto.StaticDetailsUtilities
+@model SparkAuto.Pages.Cars.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<partial name="Shared/_StatusMessage" model="@Model.Message" />
+<h2 class="text-info text-center">Cars record for @Model.CarAndOwnerViewModel.Owner.Name</h2>
+
+<div class="container whitebackground">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 container">
+            <div class="row">
+                <div class="col-6">
+                    <i class="fa fa-car"></i>
+                </div>
+                @if (User.IsInRole(StaticDetails.AdminEndUser))
+                {
+                    <div class="col-6 text-right">
+                        <a class="btn btn-sm btn-outline-info" asp-page="../Users/Index">Back to users</a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row" style="padding-top: 20px; padding-bottom: 40px">
+                <div class="col-md-3">
+                    <a class="btn btn-info form-control" asp-page="Create" asp-route-userId="@Model.CarAndOwnerViewModel.Owner.Id"><i class="fa fa-plus"></i>&nbsp; Add Car</a>
+                </div>
+
+                <div class="col-md-6 offset-3">
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-4">
+                            <label asp-for="CarAndOwnerViewModel.Owner.Name">Name</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="CarAndOwnerViewModel.Owner.Name" disabled="disabled" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-4">
+                            <label asp-for="CarAndOwnerViewModel.Owner.Name">Email</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="CarAndOwnerViewModel.Owner.Email" disabled="disabled" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-bottom: 10px">
+                        <div class="col-4">
+                            <label asp-for="CarAndOwnerViewModel.Owner.Name">PhoneNumber</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="CarAndOwnerViewModel.Owner.PhoneNumber" disabled="disabled" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                @if (!Model.CarAndOwnerViewModel.Cars.Any())
+                {
+                    <div>
+                        <p> There were no cars found for @Model.CarAndOwnerViewModel.Owner.Name</p>
+                    </div>
+                }
+                else
+                {
+                    <table class="table table-striped border">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().RegistrationNumber)</th>
+                                <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().Make)</th>
+                                <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().Model)</th>
+                                <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().Colour)</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var car in Model.CarAndOwnerViewModel.Cars)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => car.RegistrationNumber)</td>
+                                    <td>@Html.DisplayFor(m => car.Make)</td>
+                                    <td>@Html.DisplayFor(m => car.Model)</td>
+                                    <td>@Html.DisplayFor(m => car.Colour)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-page="Edit" asp-route-carId="@car.Id" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            <a asp-page="Delete" asp-route-carId="@car.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -6,6 +6,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
 <form method="get" , asp-page="Index">
     <div class="border whitebackground">
         <div class="row">
@@ -18,7 +19,7 @@
         </div>
     </div>
 
-    <div class="whitebackground border">
+    <div class="border whitebackground">
         <div style="height: 60px;" class="container border border-secondary">
             <div class="row">
                 <div class="col-11">
@@ -43,7 +44,6 @@
     </div>
 
     <div class="whitebackground border">
-        <br />
         <table class="table table-striped border">
             <tr class="table-secondary">
                 <th>
@@ -66,13 +66,18 @@
                     <td>@Html.DisplayFor(m => user.Name)</td>
                     <td>@Html.DisplayFor(m => user.Email)</td>
                     <td>@Html.DisplayFor(m => user.PhoneNumber)</td>
+                    <td>
+                        <a asp-page="../Cars/Index" asp-route-userId="@user.Id" style="text-decoration: none">
+                            <img style="width: 40px" src="/images/car.png" alt="car" /> &nbsp; View car
+                        </a>
+                    </td>
                     <td style="width: 100px">
                         <div class="btn-group">
                             <a asp-page="Edit" asp-route-userId="@user.Id" class="btn btn-success text-white"><i class="fa fa-edit"></i></a>
                             <a asp-page="Delete" asp-route-emailAddress="@user.Email" class="btn btn-danger text-white"><i class="fa fa-trash-alt"></i></a>
                         </div>
                     </td>
-                    <td></td>
+
                 </tr>
             }
             <tr>

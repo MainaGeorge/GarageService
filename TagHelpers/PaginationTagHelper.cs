@@ -9,7 +9,6 @@ namespace SparkAuto.TagHelpers
     [HtmlTargetElement("div", Attributes = "page-model")]
     public class PaginationTagHelper : TagHelper
     {
-        private readonly IUrlHelperFactory _helperFactory;
 
         [ViewContext]
         [HtmlAttributeNotBound]
@@ -25,7 +24,6 @@ namespace SparkAuto.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            var urlHelper = _helperFactory.GetUrlHelper(ViewContext);
             var divTagBuilder = new TagBuilder("div");
 
             for (var i = 1; i <= PageModel.TotalPages; i++)
@@ -44,9 +42,5 @@ namespace SparkAuto.TagHelpers
             output.Content.AppendHtml(divTagBuilder.InnerHtml);
         }
 
-        public PaginationTagHelper(IUrlHelperFactory helperFactory)
-        {
-            _helperFactory = helperFactory;
-        }
     }
 }
