@@ -1,18 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using SparkAuto.Data;
 using SparkAuto.Models;
 using SparkAuto.StaticDetailsUtilities;
 
@@ -23,25 +17,16 @@ namespace SparkAuto.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly ApplicationDbContext _db;
         private readonly RoleManager<IdentityRole> _roleManager;
-        // private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            ApplicationDbContext db)
-        // IEmailSender emailSender)
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
-            _db = db;
             _roleManager = roleManager;
-            // _emailSender = emailSender;
         }
 
         [BindProperty]
@@ -127,24 +112,14 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                     if (Input.IsAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, StaticDetails.AdminEndUser);
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                        var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { area = "Identity", userId = user.Id, code = code },
-                            protocol: Request.Scheme);
 
-                        // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                        _logger.LogInformation("User created a new account with password.");
+                        //optionally perform email confirmation
                         return RedirectToPage("/Users/Index");
                     }
                     else
                     {
                         await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created a new account with password.");
 
                         return LocalRedirect(returnUrl);
                     }

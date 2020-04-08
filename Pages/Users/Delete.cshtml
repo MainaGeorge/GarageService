@@ -5,19 +5,19 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1 class="text-danger text-center mb-4">Are you sure you want to delete @Model.User.Name?</h1>
+<h1 class="text-danger text-center mb-4">Are you sure you want to delete @Model.ApplicationUser.Name?</h1>
 
 <div class="row whitebackground border my-auto mx-auto " style="width: 60%">
     <div class="col-md-8">
         <form method="post">
-            <input type="hidden" asp-for="User.Email" />
+            <input type="hidden" asp-for="ApplicationUser.Email" />
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.Name"></label>
+                        <label asp-for="ApplicationUser.Name"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.Name" class="form-control" disabled="disabled" />
+                        <input asp-for="ApplicationUser.Name" class="form-control" disabled="disabled" />
                     </div>
                 </div>
             </div>
@@ -25,10 +25,10 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.PhoneNumber"></label>
+                        <label asp-for="ApplicationUser.PhoneNumber"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.PhoneNumber" class="form-control" disabled="disabled" />
+                        <input asp-for="ApplicationUser.PhoneNumber" class="form-control" disabled="disabled" />
                     </div>
                 </div>
             </div>
@@ -36,10 +36,10 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.Address"></label>
+                        <label asp-for="ApplicationUser.Address"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.Address" class="form-control" disabled="disabled" />
+                        <input asp-for="ApplicationUser.Address" class="form-control" disabled="disabled" />
                     </div>
                 </div>
             </div>
@@ -47,10 +47,10 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.PostalAddress"></label>
+                        <label asp-for="ApplicationUser.PostalAddress"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.PostalAddress" class="form-control" disabled="disabled" />
+                        <input asp-for="ApplicationUser.PostalAddress" class="form-control" disabled="disabled" />
                     </div>
                 </div>
             </div>
@@ -58,10 +58,10 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.City"></label>
+                        <label asp-for="ApplicationUser.City"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.City" class="form-control" disabled="disabled" />
+                        <input asp-for="ApplicationUser.City" class="form-control" disabled="disabled" />
                     </div>
                 </div>
             </div>

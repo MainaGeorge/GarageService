@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -23,7 +20,7 @@ namespace SparkAuto.Pages.Users
         }
 
         [BindProperty]
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public async Task<IActionResult> OnGet(string emailAddress)
         {
@@ -32,7 +29,7 @@ namespace SparkAuto.Pages.Users
                 return NotFound();
             }
 
-            User = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Email == emailAddress);
+            ApplicationUser = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Email == emailAddress);
 
             if (User == null)
             {
@@ -44,7 +41,7 @@ namespace SparkAuto.Pages.Users
 
         public async Task<IActionResult> OnPost()
         {
-            var userDb = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == User.Email);
+            var userDb = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == ApplicationUser.Email);
 
             if (userDb == null)
             {
