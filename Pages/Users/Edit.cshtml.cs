@@ -1,57 +1,71 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SparkAuto.Data;
 using SparkAuto.Models;
+using SparkAuto.StaticDetailsUtilities;
 
 namespace SparkAuto.Pages.Users
 {
+    [Authorize(Roles = StaticDetails.AdminEndUser)]
     public class EditModel : PageModel
     {
+
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public ApplicationUser User { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
         public EditModel(ApplicationDbContext db)
         {
             _db = db;
         }
-        public async Task<IActionResult> OnGet(string emailAddress)
+        public async Task<IActionResult> OnGet(string userId)
         {
-            if (string.IsNullOrWhiteSpace(emailAddress))
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 return NotFound();
             }
 
-            User = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == emailAddress);
+            ApplicationUser = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == userId);
 
-            if (User == null)
+            if (ApplicationUser == null)
             {
                 return NotFound();
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            var dbUser = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Email == User.Email);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var dbUser = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Id == ApplicationUser.Id);
 
             if (dbUser == null)
             {
                 return NotFound();
             }
+            else
+            {
+                dbUser.Name = ApplicationUser.Name;
+                dbUser.PhoneNumber = ApplicationUser.PhoneNumber;
+                dbUser.PostalAddress = ApplicationUser.PostalAddress;
+                dbUser.Address = ApplicationUser.Address;
+                dbUser.City = ApplicationUser.City;
 
-            dbUser.Name = User.Name;
-            dbUser.PhoneNumber = User.PhoneNumber;
-            dbUser.PostalAddress = User.PostalAddress;
-            dbUser.Address = User.Address;
-            dbUser.City = User.City;
+                await _db.SaveChangesAsync();
 
-            await _db.SaveChangesAsync();
+                return RedirectToPage("Index");
+            }
 
-            return RedirectToPage("Index");
+
         }
     }
 }

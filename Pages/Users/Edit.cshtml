@@ -1,4 +1,4 @@
-﻿@page "/Edit/{emailAddress}"
+﻿@page "/Edit/{userId}"
 @model SparkAuto.Pages.Users.EditModel
 @{
     ViewData["Title"] = "Edit";
@@ -8,16 +8,17 @@
 <div class="row whitebackground border my-auto mx-auto " style="width: 60%">
     <div class="col-md-8">
         <form method="post">
-            <input type="hidden" asp-for="User.Email" />
+            <input type="hidden" asp-for="ApplicationUser.Email" />
+            <input asp-for="ApplicationUser.Id" hidden />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.Name"></label>
+                        <label asp-for="ApplicationUser.Name"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.Name" class="form-control" />
-                        <span asp-validation-for="User.Name" class="text-danger d-block"></span>
+                        <input asp-for="ApplicationUser.Name" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.Name" class="text-danger d-block"></span>
                     </div>
                 </div>
             </div>
@@ -25,11 +26,11 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.PhoneNumber"></label>
+                        <label asp-for="ApplicationUser.PhoneNumber"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.PhoneNumber" class="form-control" />
-                        <span asp-validation-for="User.PhoneNumber" class="text-danger d-block"></span>
+                        <input asp-for="ApplicationUser.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger d-block"></span>
                     </div>
                 </div>
             </div>
@@ -37,11 +38,11 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.Address"></label>
+                        <label asp-for="ApplicationUser.Address"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.Address" class="form-control" />
-                        <span asp-validation-for="User.Address" class="text-danger d-block"></span>
+                        <input asp-for="ApplicationUser.Address" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.Address" class="text-danger d-block"></span>
                     </div>
                 </div>
             </div>
@@ -49,11 +50,11 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.PostalAddress"></label>
+                        <label asp-for="ApplicationUser.PostalAddress"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.PostalAddress" class="form-control" />
-                        <span asp-validation-for="User.PostalAddress" class="text-danger d-block"></span>
+                        <input asp-for="ApplicationUser.PostalAddress" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.PostalAddress" class="text-danger d-block"></span>
                     </div>
                 </div>
             </div>
@@ -61,11 +62,11 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-4">
-                        <label asp-for="User.City"></label>
+                        <label asp-for="ApplicationUser.City"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="User.City" class="form-control" />
-                        <span asp-validation-for="User.City" class="text-danger d-block"></span>
+                        <input asp-for="ApplicationUser.City" class="form-control" />
+                        <span asp-validation-for="ApplicationUser.City" class="text-danger d-block"></span>
                     </div>
                 </div>
             </div>
@@ -84,6 +85,7 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+@section Scripts
+{
+    <partial name="Shared/_ValidationScriptsPartial" />
 }

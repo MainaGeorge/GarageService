@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SparkAuto.StaticDetailsUtilities
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,41 +31,44 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/ServiceTypes/Index">Service Types</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Users/Index">Users</a>
-                        </li>
-                    </ul>
+                            @if (User.IsInRole(StaticDetails.AdminEndUser))
+                            {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/ServiceTypes/Index">Service Types</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-page="/Users/Index">Users</a>
+                            </li>
+                        }
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted text-white-50 " style="background-color: #343a40">
+            </nav>
+        </header>
         <div class="container">
-            &copy; 2020 - SparkAuto
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
+
+        <footer class="border-top footer text-muted text-white-50 " style="background-color: #343a40">
+            <div class="container">
+                &copy; 2020 - SparkAuto
+            </div>
+        </footer>
 
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        </environment>
 
-    <environment exclude="Development">
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    </environment>
+        <environment exclude="Development">
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        </environment>
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

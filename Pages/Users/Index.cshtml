@@ -68,7 +68,7 @@
                     <td>@Html.DisplayFor(m => user.PhoneNumber)</td>
                     <td style="width: 100px">
                         <div class="btn-group">
-                            <a asp-page="Edit" asp-route-emailAddress="@user.Email" class="btn btn-success text-white"><i class="fa fa-edit"></i></a>
+                            <a asp-page="Edit" asp-route-userId="@user.Id" class="btn btn-success text-white"><i class="fa fa-edit"></i></a>
                             <a asp-page="Delete" asp-route-emailAddress="@user.Email" class="btn btn-danger text-white"><i class="fa fa-trash-alt"></i></a>
                         </div>
                     </td>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using SparkAuto.StaticDetailsUtilities;
 
 namespace SparkAuto.Pages.Users
 {
+    [Authorize(Roles = StaticDetails.AdminEndUser)]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;

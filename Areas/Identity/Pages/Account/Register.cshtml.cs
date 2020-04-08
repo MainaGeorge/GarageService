@@ -78,6 +78,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
 
             [Required]
             public string PhoneNumber { get; set; }
+
+            public bool IsAdmin { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -122,31 +124,34 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(StaticDetails.CustomerEndUser));
                     }
 
-                    await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
-
-                    _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code },
-                        protocol: Request.Scheme);
-
-                    // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (Input.IsAdmin)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                        await _userManager.AddToRoleAsync(user, StaticDetails.AdminEndUser);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = user.Id, code = code },
+                            protocol: Request.Scheme);
+
+                        // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        // $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        _logger.LogInformation("User created a new account with password.");
+                        return RedirectToPage("/Users/Index");
                     }
                     else
                     {
+                        await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("User created a new account with password.");
+
                         return LocalRedirect(returnUrl);
                     }
+
+
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

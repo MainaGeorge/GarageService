@@ -1,12 +1,16 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SparkAuto.Data;
 using SparkAuto.Models;
+using SparkAuto.StaticDetailsUtilities;
 
 namespace SparkAuto.Pages.ServiceTypes
 {
+
+    [Authorize(Roles = StaticDetails.AdminEndUser)]
     public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -37,7 +41,7 @@ namespace SparkAuto.Pages.ServiceTypes
 
         public async Task<IActionResult> OnPostAsync()
         {
-            
+
             ServiceType = await _db.ServiceType.FindAsync(ServiceType.Id);
 
             if (ServiceType == null) return RedirectToPage("./Index");
