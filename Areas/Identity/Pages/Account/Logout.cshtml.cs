@@ -33,7 +33,7 @@ namespace SparkAuto.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage("Register");
+                return RedirectToPage("./Login");
             }
         }
     }
