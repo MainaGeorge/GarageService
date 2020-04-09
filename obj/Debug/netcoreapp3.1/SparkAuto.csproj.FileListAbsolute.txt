@@ -983,3 +983,4 @@ C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Page
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Cars\Index.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Cars\Create.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_StatusMessage.cshtml.g.cs
+C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Cars\Delete.cshtml.g.cs
