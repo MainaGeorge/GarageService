@@ -16,6 +16,10 @@ namespace SparkAuto.Pages.Cars
             _db = db;
         }
 
+
+        [TempData]
+        public string Message { get; set; }
+
         [BindProperty]
         public Car Car { get; set; }
 
@@ -59,6 +63,8 @@ namespace SparkAuto.Pages.Cars
             carDb.Style = Car.Style;
 
             await _db.SaveChangesAsync();
+
+            Message = "Car updated successfully";
 
             return RedirectToPage("Index", new { userId = Car.UserId });
         }
