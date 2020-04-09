@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SparkAuto.Data;
 using SparkAuto.Models;
@@ -13,11 +10,11 @@ namespace SparkAuto.Pages.Cars
 {
     public class EditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
-        public EditModel(ApplicationDbContext context)
+        public EditModel(ApplicationDbContext db)
         {
-            _context = context;
+            _db = db;
         }
 
         [BindProperty]
@@ -30,19 +27,16 @@ namespace SparkAuto.Pages.Cars
                 return NotFound();
             }
 
-            Car = await _context.Car
-                .Include(c => c.ApplicationUser).FirstOrDefaultAsync(m => m.Id == carId);
+            Car = await _db.Car.FirstOrDefaultAsync(car => car.Id == carId);
 
             if (Car == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUser, "Id", "Id");
+
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -50,30 +44,24 @@ namespace SparkAuto.Pages.Cars
                 return Page();
             }
 
-            _context.Attach(Car).State = EntityState.Modified;
+            var carDb = await _db.Car.FirstOrDefaultAsync(c => c.Id == Car.Id);
 
-            try
+            if (carDb == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CarExists(Car.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound("There is ");
             }
 
-            return RedirectToPage("./Index");
-        }
+            carDb.RegistrationNumber = Car.RegistrationNumber;
+            carDb.Make = Car.Make;
+            carDb.Colour = Car.Colour;
+            carDb.Model = Car.Model;
+            carDb.Miles = Car.Miles;
+            carDb.Year = Car.Year;
+            carDb.Style = Car.Style;
 
-        private bool CarExists(int id)
-        {
-            return _context.Car.Any(e => e.Id == id);
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("Index", new { userId = Car.UserId });
         }
     }
 }

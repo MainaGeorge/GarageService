@@ -1,4 +1,4 @@
-﻿@page "/Edit/{carId:int?}"
+﻿@page "/edit-car/{carId:int?}"
 @model SparkAuto.Pages.Cars.EditModel
 
 @{
@@ -6,57 +6,103 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h4 class="text-center text-info">Editing @Model.Car.Make @Model.Car.Make @Model.Car.Year</h4>
 
-<h4>Car</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Car.Id" />
-            <input type="hidden" asp-for="Car.UserId" />
+<form method="post">
+    <div class="whitebackground border">
+        <input type="hidden" asp-for="Car.UserId" />
+        <input type="hidden" asp-for="Car.Id" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.RegistrationNumber">Registration Number</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.RegistrationNumber" />
+                <span asp-validation-for="Car.RegistrationNumber" class="text-danger d-block"></span>
+            </div>
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Car.RegistrationNumber"></label>
-                <input asp-for="Car.RegistrationNumber" class="form-control" />
-                <span asp-validation-for="Car.RegistrationNumber" class="text-danger"></span>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Make">Make</label>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Make"></label>
-                <input asp-for="Car.Make" class="form-control" />
-                <span asp-validation-for="Car.Make" class="text-danger"></span>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Make" />
+                <span asp-validation-for="Car.Make" class="text-danger d-block"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Year"></label>
-                <input asp-for="Car.Year" class="form-control" />
-                <span asp-validation-for="Car.Year" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Model">Model</label>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Colour"></label>
-                <input asp-for="Car.Colour" class="form-control" />
-                <span asp-validation-for="Car.Colour" class="text-danger"></span>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Model" />
+                <span asp-validation-for="Car.Model" class="text-danger d-block"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Miles"></label>
-                <input asp-for="Car.Miles" class="form-control" />
-                <span asp-validation-for="Car.Miles" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Colour">Colour</label>
             </div>
-            <div class="form-group">
-                <label asp-for="Car.Style"></label>
-                <input asp-for="Car.Style" class="form-control" />
-                <span asp-validation-for="Car.Style" class="text-danger"></span>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Colour" />
+                <span asp-validation-for="Car.Colour" class="text-danger d-block"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Miles">Miles</label>
             </div>
-        </form>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Miles" />
+                <span asp-validation-for="Car.Miles" class="text-danger d-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Year">Year</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Year" />
+                <span asp-validation-for="Car.Year" class="text-danger d-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Car.Style">Style</label>
+            </div>
+            <div class="col-5">
+                <input type="text" class="form-control" autocomplete="off" asp-for="Car.Style" />
+                <span asp-validation-for="Car.Style" class="text-danger d-block"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="offset-2 col-5">
+                <div class="row">
+                    <div class="col-6">
+                        <input class="btn btn-success form-control" type="submit" value="Update car" />
+                    </div>
+
+
+                    <div class="col-6">
+                        <a asp-page="./Index" asp-route-userId="@Model.Car.UserId" class="btn btn-primary form-control">Back to Cars</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
+
+</form>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
