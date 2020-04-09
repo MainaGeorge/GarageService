@@ -19,6 +19,9 @@ namespace SparkAuto.Pages.Users
             _db = db;
         }
 
+        [TempData]
+        public string Message { get; set; } 
+
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
 
@@ -50,6 +53,8 @@ namespace SparkAuto.Pages.Users
 
             _db.ApplicationUser.Remove(userDb);
             await _db.SaveChangesAsync();
+
+            Message = "User successfully deleted.";
 
             return RedirectToPage("Index");
         }

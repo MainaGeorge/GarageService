@@ -1,5 +1,4 @@
 ﻿@page
-@using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging
 @model SparkAuto.Pages.ServiceTypes.IndexModel
 @{
     ViewData["Title"] = "Index";
@@ -8,6 +7,7 @@
 
 <br />
 <br />
+<partial name="Shared/_StatusMessage" model="@Model.Message" />
 
 
 <div class="border whitebackground">

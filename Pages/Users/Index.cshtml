@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-
+<partial name="Shared/_StatusMessage" model="@Model.Message" />
 <form method="get" , asp-page="Index">
     <div class="border whitebackground">
         <div class="row">

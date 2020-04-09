@@ -16,6 +16,9 @@ namespace SparkAuto.Pages.ServiceTypes
         [BindProperty]
         public ServiceType ServiceType { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public CreateModel(ApplicationDbContext db)
         {
             _db = db;
@@ -35,6 +38,8 @@ namespace SparkAuto.Pages.ServiceTypes
             await _db.ServiceType.AddAsync(ServiceType);
 
             await _db.SaveChangesAsync();
+
+            Message = "service created successfully";
 
             return RedirectToPage("Index");
         }

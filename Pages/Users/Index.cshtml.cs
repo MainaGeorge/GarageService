@@ -20,6 +20,9 @@ namespace SparkAuto.Pages.Users
         [BindProperty]
         public PaginationViewModel ViewModel { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public IndexModel(ApplicationDbContext db)
         {
             _db = db;

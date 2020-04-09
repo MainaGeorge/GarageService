@@ -77,7 +77,10 @@
                                 <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().Model)</th>
                                 <th>@Html.DisplayNameFor(s => s.CarAndOwnerViewModel.Cars.FirstOrDefault().Colour)</th>
                                 <th></th>
-                                <th></th>
+                                @if (User.IsInRole(StaticDetails.AdminEndUser))
+                                {
+                                    <th></th>
+                                }
                                 <th></th>
                             </tr>
                         </thead>
@@ -89,8 +92,15 @@
                                     <td>@Html.DisplayFor(m => car.Make)</td>
                                     <td>@Html.DisplayFor(m => car.Model)</td>
                                     <td>@Html.DisplayFor(m => car.Colour)</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>
+                                        <a href="#" class="btn btn-secondary"><i class="fas fa-wrench"></i>&nbsp; Service History</a>
+                                    </td>
+
+                                    @if (User.IsInRole(StaticDetails.AdminEndUser))
+                                    {
+                                        <td><a href="#" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp; New Service</a></td>
+                                    }
+
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a asp-page="Edit" asp-route-carId="@car.Id" class="btn btn-info"><i class="fas fa-edit"></i></a>

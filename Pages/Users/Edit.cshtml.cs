@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,6 +17,9 @@ namespace SparkAuto.Pages.Users
 
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
+
+        [TempData]
+        public string Message { get; set; }
 
         public EditModel(ApplicationDbContext db)
         {
@@ -61,6 +63,8 @@ namespace SparkAuto.Pages.Users
                 dbUser.City = ApplicationUser.City;
 
                 await _db.SaveChangesAsync();
+
+                Message = "User information successfully updated.";
 
                 return RedirectToPage("Index");
             }

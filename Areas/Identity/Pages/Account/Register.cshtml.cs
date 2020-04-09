@@ -32,6 +32,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
@@ -94,6 +96,7 @@ namespace SparkAuto.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+
                 if (result.Succeeded)
                 {
 
@@ -118,6 +121,7 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        Message = "User logged in successfully";
                         await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
                         await _signInManager.SignInAsync(user, isPersistent: false);
 

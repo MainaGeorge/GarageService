@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +22,8 @@ namespace SparkAuto.Pages.ServiceTypes
             _db = db;
         }
 
+        [TempData]
+        public string Message { get; set; }
         public async Task<IActionResult> OnGet()
         {
             Services = await _db.ServiceType.ToListAsync();

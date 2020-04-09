@@ -19,6 +19,9 @@ namespace SparkAuto.Pages.ServiceTypes
         [BindProperty]
         public ServiceType ServiceType { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? serviceId)
         {
             if (serviceId == null)
@@ -50,6 +53,8 @@ namespace SparkAuto.Pages.ServiceTypes
             dbService.Price = ServiceType.Price;
 
             await _db.SaveChangesAsync();
+
+            Message = "service updated successfully";
 
             return RedirectToPage("./Index");
         }
