@@ -60,7 +60,7 @@
                                     <td>@Html.DisplayFor(n => service.Details)</td>
                                     <td>@Html.Raw(service.DateAdded.ToString("d"))</td>
                                     <td>
-                                        <a asp-for="/Details" asp-route-serviceHeaderId="@service.Id" class="btn btn-info">
+                                        <a asp-page="Details" asp-route-serviceHeaderId="@service.Id" class="btn btn-info">
                                             <i class="fas fa-list"></i> Details
                                         </a>
                                     </td>
