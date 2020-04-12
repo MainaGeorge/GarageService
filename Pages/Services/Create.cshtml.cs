@@ -56,6 +56,51 @@ namespace SparkAuto.Pages.Services
             return Page();
         }
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                CarServiceModelView.ServiceHeader.DateAdded = DateTime.Now;
+
+                CarServiceModelView.ServiceShoppingCartList =
+                    _db.ServiceShoppingCart.Include(c => c.ServiceType)
+                        .Where(c => c.CarId == CarServiceModelView.Car.Id)
+                        .ToList();
+
+                CarServiceModelView.ServiceHeader.TotalPrice = CarServiceModelView.ServiceShoppingCartList
+                    .Sum(s => s.ServiceType.Price);
+
+                CarServiceModelView.ServiceHeader.CarId = CarServiceModelView.Car.Id;
+
+                _db.ServiceHeader.Add(CarServiceModelView.ServiceHeader);
+
+                await _db.SaveChangesAsync();
+
+                foreach (var service in CarServiceModelView.ServiceShoppingCartList)
+                {
+                    var serviceDetails = new ServiceDetails
+                    {
+                        ServiceHeaderId = CarServiceModelView.ServiceHeader.Id,
+                        ServicePrice = service.ServiceType.Price,
+                        ServiceName = service.ServiceType.Name,
+                        ServiceTypeId = service.ServiceTypeId
+                    };
+                    _db.ServiceDetails.Add(serviceDetails);
+
+                }
+
+                _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
+
+                await _db.SaveChangesAsync();
+
+                return RedirectToPage("../Cars/Index", new { userId = CarServiceModelView.Car.UserId });
+            }
+
+            return Page();
+
+
+        }
+
         public async Task<IActionResult> OnPostAddToCart()
         {
             var serviceToBeAdded = new ServiceShoppingCart
@@ -67,6 +112,7 @@ namespace SparkAuto.Pages.Services
             await _db.ServiceShoppingCart.AddAsync(serviceToBeAdded);
 
             await _db.SaveChangesAsync();
+
             return RedirectToPage("Create", new { carId = CarServiceModelView.Car.Id });
         }
 

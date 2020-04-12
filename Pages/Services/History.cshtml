@@ -1,0 +1,85 @@
+﻿@page
+@model SparkAuto.Pages.Services.HistoryModel
+@{
+    ViewData["Title"] = "History";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="container row pt-4 pb-2">
+    <div class="col-6">
+        <h2 class="text-info py-2">Service History</h2>
+    </div>
+    <div class="col-3 offset-3 text-right py-2">
+        <a asp-page="../Cars/Index" asp-route-userId="@Model.UserId" class="btn btn-outline-success form-control">
+            Back to Cars
+        </a>
+    </div>
+</div>
+
+@if (Model.ServiceHeaderList.Any())
+{
+    <div class="container whitebackground">
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-1 text-center pt-3 text-white-50">
+                    <i class="far fa-user fa-2x"></i>
+                </div>
+                <div class="col-5">
+                    <p>@Model.ServiceHeader.Car.ApplicationUser.Name</p>
+                    <p>@Model.ServiceHeader.Car.ApplicationUser.Email</p>
+                    @* <p>@Model.CarServiceModelView.Car.ApplicationUser.PhoneNumber</p> *@
+                </div>
+                <div class="col-5 text-right">
+                    <p>@Model.ServiceHeader.Car.Colour @Model.ServiceHeader.Car.Make @Model.ServiceHeader.Car.Model @Model.ServiceHeader.Car.Style</p>
+                    <p>@Model.ServiceHeader.Car.Year</p>
+                    @* <p>@Model.CarServiceModelView.Car.Colour</p> *@
+                </div>
+                <div class="col-1 text-right pt-3 text-white-50">
+                    <i class="fas fa-car fa-2x"></i>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="border rounded p-2">
+
+                        <table class="table table-striped border">
+                            <tr class="table-secondary">
+                                <th>@Html.DisplayNameFor(n => n.ServiceHeader.Miles)</th>
+                                <th>@Html.DisplayNameFor(n => n.ServiceHeader.TotalPrice)</th>
+                                <th>@Html.DisplayNameFor(n => n.ServiceHeader.Details)</th>
+                                <th>@Html.DisplayNameFor(n => n.ServiceHeader.DateAdded)</th>
+                                <th></th>
+
+                            </tr>
+                            @foreach (var service in Model.ServiceHeaderList)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(n => service.Miles)</td>
+                                    <td>@Html.DisplayFor(n => service.TotalPrice)</td>
+                                    <td>@Html.DisplayFor(n => service.Details)</td>
+                                    <td>@Html.Raw(service.DateAdded.ToString("d"))</td>
+                                    <td>
+                                        <a asp-for="/Details" asp-route-serviceHeaderId="@service.Id" class="btn btn-info">
+                                            <i class="fas fa-list"></i> Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>}
+else
+{
+    <div class="whitebackground">
+        <p class="text-danger">No service history found..</p>
+    </div>
+}
+
+
+

@@ -986,3 +986,4 @@ C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Page
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Cars\Delete.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Services\Create.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache
+C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Services\History.cshtml.g.cs
