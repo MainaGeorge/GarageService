@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using SparkAuto.Models;
 
@@ -9,15 +8,12 @@ namespace SparkAuto.TagHelpers
     public class PaginationTagHelper : TagHelper
     {
 
-        [ViewContext]
-        [HtmlAttributeNotBound]
-        public ViewContext ViewContext { get; set; }    //provide access to requests and responses
-
         public PaginationDetails PageModel { get; set; }
 
-        public string PageAction { get; set; }
         public string PageClass { get; set; }
+
         public string PageClassNormal { get; set; }
+
         public string PageClassSelected { get; set; }
 
 

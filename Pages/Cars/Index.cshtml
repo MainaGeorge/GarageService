@@ -93,17 +93,18 @@
                                     <td>@Html.DisplayFor(m => car.Model)</td>
                                     <td>@Html.DisplayFor(m => car.Colour)</td>
                                     <td>
-                                        <a href="#" class="btn btn-secondary"><i class="fas fa-wrench"></i>&nbsp; Service History</a>
+                                        <a asp-page="../Services/History" asp-route-carId="@car.Id" class="btn btn-secondary"><i class="fas fa-wrench"></i>&nbsp; Service History</a>
                                     </td>
 
                                     @if (User.IsInRole(StaticDetails.AdminEndUser))
                                     {
-                                        <td><a href="#" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp; New Service</a></td>
+                                        <td><a asp-page="../Services/Create" asp-route-carId="@car.Id" class="btn btn-success"><i class="fas fa-plus"></i>&nbsp; New Service</a></td>
                                     }
 
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a asp-page="Edit" asp-route-carId="@car.Id" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                            &nbsp;&nbsp;
                                             <a asp-page="Delete" asp-route-carId="@car.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                         </div>
                                     </td>

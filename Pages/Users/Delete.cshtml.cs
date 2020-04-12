@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,7 +21,7 @@ namespace SparkAuto.Pages.Users
         }
 
         [TempData]
-        public string Message { get; set; } 
+        public string Message { get; set; }
 
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
@@ -51,7 +52,19 @@ namespace SparkAuto.Pages.Users
                 return NotFound();
             }
 
+            var userCars = _db.Car.Where(car => car.UserId == userDb.Id);
+
+            if (userCars.Any())
+            {
+                foreach (var car in userCars)
+                {
+                    _db.Car.Remove(car);
+                }
+
+            }
+
             _db.ApplicationUser.Remove(userDb);
+
             await _db.SaveChangesAsync();
 
             Message = "User successfully deleted.";

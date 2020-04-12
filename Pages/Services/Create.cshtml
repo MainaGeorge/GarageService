@@ -1,0 +1,116 @@
+﻿@page
+@using System.Web
+@model SparkAuto.Pages.Services.CreateModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container row pt-4 pb-2">
+    <div class="col-6">
+        <h2 class="text-info py-2">Create New Service</h2>
+    </div>
+    <div class="col-3 offset-3 text-right py-2">
+        <a asp-page="../Cars/Index" asp-route-userId="@Model.CarServiceModelView.Car.UserId" class="btn btn-outline-success form-control">
+            Back to Cars
+        </a>
+    </div>
+</div>
+
+
+<div class="container whitebackground">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-1 text-center pt-3 text-white-50">
+                <i class="far fa-user fa-2x"></i>
+            </div>
+            <div class="col-5">
+                <p>@Model.CarServiceModelView.Car.ApplicationUser.Name</p>
+                <p>@Model.CarServiceModelView.Car.ApplicationUser.Email</p>
+                @* <p>@Model.CarServiceModelView.Car.ApplicationUser.PhoneNumber</p> *@
+            </div>
+            <div class="col-5 text-right">
+                <p>@Model.CarServiceModelView.Car.Colour @Model.CarServiceModelView.Car.Make @Model.CarServiceModelView.Car.Model @Model.CarServiceModelView.Car.Style</p>
+                <p>@Model.CarServiceModelView.Car.Year</p>
+                @* <p>@Model.CarServiceModelView.Car.Colour</p> *@
+            </div>
+            <div class="col-1 text-right pt-3 text-white-50">
+                <i class="fas fa-car fa-2x"></i>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="container">
+                    <input type="hidden" asp-for="CarServiceModelView.Car.UserId" />
+                    <input type="hidden" asp-for="CarServiceModelView.Car.Make" />
+                    <input type="hidden" asp-for="CarServiceModelView.Car.Model" />
+                    <input type="hidden" asp-for="CarServiceModelView.Car.RegistrationNumber" />
+                    <input type="hidden" asp-for="CarServiceModelView.Car.Id" />
+
+                    <div class="border rounded p-2">
+                        <div class="row">
+                            <div class="col-3">
+                                <h4 class="text-info pl-3 pt-2 pb-1">Add Service</h4>
+                            </div>
+                            <div class="col-9 pt-2 pb-1">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <select asp-for="CarServiceModelView.ServiceDetails.ServiceTypeId"
+                                                asp-items="@(new SelectList(Model.CarServiceModelView.ServiceTypesList, "Id", "Name"))"
+                                                class="form-control">
+                                        </select>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary form-control" asp-page-handler="AddToCart">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container border rounded p-2">
+                        <h3 class="text-info pb-2">Service Summary</h3>
+                        @if (Model.CarServiceModelView.ServiceShoppingCartList.Any())
+                        {
+                            <div class="row mt-3">
+                                <div class=col-7>
+                                    <table class="table table-striped border">
+                                        <tr class="table-secondary">
+                                            <th>@Html.DisplayNameFor(n => n.CarServiceModelView.ServiceTypesList.FirstOrDefault().Name)</th>
+                                            <th>@Html.DisplayNameFor(n => n.CarServiceModelView.ServiceTypesList.FirstOrDefault().Price)</th>
+                                            <th></th>
+                                        </tr>
+                                        @foreach (var service in Model.CarServiceModelView.ServiceShoppingCartList)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(n => service.ServiceType.Name)</td>
+                                                <td>@Html.DisplayFor(n => service.ServiceType.Price)</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-danger" asp-page-handler="RemoveServiceFromCart" asp-route-serviceTypeId="@service.ServiceTypeId">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                                <div class=col-5>
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>No services have been performed on this vehicle</p>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -22,9 +22,14 @@ namespace SparkAuto
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>(opt =>
+                {
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.Password.RequireDigit = false;
+                    opt.Password.RequireUppercase = false;
+                })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -34,14 +39,16 @@ namespace SparkAuto
             {
                 fb.AppId = "337631200550285";
                 fb.AppSecret = "3795a07d0207fb7a825ee9cb757caaba";
-            }).AddGoogle(google =>
+            })
+                .AddGoogle(google =>
             {
                 google.ClientId = "714806448953-dto39hf0g6n4dskh13hhpu5vfctr4t0k.apps.googleusercontent.com";
                 google.ClientSecret = "toriEyAkzGy4L2cCeQxGldzb";
             });
 
 
-            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddRazorPages();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddMvc();
         }
 
