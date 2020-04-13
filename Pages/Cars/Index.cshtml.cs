@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using SparkAuto.Models.ViewModel;
 
 namespace SparkAuto.Pages.Cars
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _db;
@@ -24,7 +26,7 @@ namespace SparkAuto.Pages.Cars
         }
         public async Task<IActionResult> OnGet(string userId = null)
         {
-            if (userId == null)
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 var claimsIdentity = (ClaimsIdentity)User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);

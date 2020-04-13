@@ -10,17 +10,80 @@
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
+            <input type="hidden" asp-for="Input.Email" />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Username"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Username" class="form-control" disabled />
+                    </div>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="Input.PhoneNumber"></label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Input.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Input.Name" class="form-control" />
+                        <span asp-validation-for="Input.Name" class="text-danger d-block"></span>
+                    </div>
+                </div>
             </div>
-            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Input.PhoneNumber"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Input.Address"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Input.PostalAddress"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Input.PostalAddress" class="form-control" />
+                        <span asp-validation-for="Input.PostalAddress" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-4">
+                        <label asp-for="Input.City"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Input.City" class="form-control" />
+                        <span asp-validation-for="Input.City" class="text-danger d-block"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-8 offset-4">
+                        <button id="update-profile-button" type="submit" class="btn btn-info form-control">Save</button>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>

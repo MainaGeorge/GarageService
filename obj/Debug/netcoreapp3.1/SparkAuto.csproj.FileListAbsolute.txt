@@ -946,7 +946,6 @@ C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Area
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Error.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Index.cshtml.g.cs
-C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Privacy.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ServiceTypes\Create.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ServiceTypes\Edit.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ServiceTypes\Index.cshtml.g.cs
@@ -987,3 +986,5 @@ C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Page
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Services\Create.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Services\History.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Services\Details.cshtml.g.cs
+C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache
+C:\Users\genag\OneDrive\Desktop\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\Components\UserName\Default.cshtml.g.cs
