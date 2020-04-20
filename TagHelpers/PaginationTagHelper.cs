@@ -35,6 +35,7 @@ namespace SparkAuto.TagHelpers
             }
 
             output.Content.AppendHtml(divTagBuilder.InnerHtml);
+
         }
 
     }
