@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,6 +17,8 @@ namespace SparkAuto.Pages.Users
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
+        public UserModel ModelToBeEdited { get; set; }
+
         public ApplicationUser ApplicationUser { get; set; }
 
         [TempData]
@@ -38,6 +41,18 @@ namespace SparkAuto.Pages.Users
             {
                 return NotFound();
             }
+
+            ModelToBeEdited = new UserModel
+            {
+                Id = ApplicationUser.Id,
+                Email = ApplicationUser.Email,
+                City = ApplicationUser.City,
+                PhoneNumber = ApplicationUser.PhoneNumber,
+                PostalAddress = ApplicationUser.PostalAddress,
+                Name = ApplicationUser.Name,
+                Address = ApplicationUser.Address
+
+            };
             return Page();
         }
 
@@ -48,7 +63,7 @@ namespace SparkAuto.Pages.Users
                 return Page();
             }
 
-            var dbUser = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Id == ApplicationUser.Id);
+            var dbUser = await _db.ApplicationUser.FirstOrDefaultAsync(user => user.Id == ModelToBeEdited.Id);
 
             if (dbUser == null)
             {
@@ -56,11 +71,11 @@ namespace SparkAuto.Pages.Users
             }
             else
             {
-                dbUser.Name = ApplicationUser.Name;
-                dbUser.PhoneNumber = ApplicationUser.PhoneNumber;
-                dbUser.PostalAddress = ApplicationUser.PostalAddress;
-                dbUser.Address = ApplicationUser.Address;
-                dbUser.City = ApplicationUser.City;
+                dbUser.Name = ModelToBeEdited.Name;
+                dbUser.PhoneNumber = ModelToBeEdited.PhoneNumber;
+                dbUser.PostalAddress = ModelToBeEdited.PostalAddress;
+                dbUser.Address = ModelToBeEdited.Address;
+                dbUser.City = ModelToBeEdited.City;
 
                 await _db.SaveChangesAsync();
 
@@ -70,6 +85,26 @@ namespace SparkAuto.Pages.Users
             }
 
 
+        }
+
+        public class UserModel
+        {
+            [Required]
+            public string Name { get; set; }
+            public string Id { get; set; }
+
+            [Required]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+
+            [Display(Name = "Postal Address")]
+            public string PostalAddress { get; set; }
+
+            public string Address { get; set; }
+
+            public string City { get; set; }
+
+            public string Email { get; set; }
         }
     }
 }

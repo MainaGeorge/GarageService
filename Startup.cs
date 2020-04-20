@@ -29,6 +29,7 @@ namespace SparkAuto
                     opt.Password.RequireNonAlphanumeric = false;
                     opt.Password.RequireDigit = false;
                     opt.Password.RequireUppercase = false;
+
                 })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
@@ -37,13 +38,13 @@ namespace SparkAuto
             services.AddAuthentication()
                 .AddFacebook(fb =>
             {
-                fb.AppId = "337631200550285";
-                fb.AppSecret = "3795a07d0207fb7a825ee9cb757caaba";
+                fb.AppId = Configuration.GetValue<string>("ExternalAuthentication:facebookAppId");
+                fb.AppSecret = Configuration.GetValue<string>("ExternalAuthentication:facebookAppSecret");
             })
                 .AddGoogle(google =>
             {
-                google.ClientId = "714806448953-dto39hf0g6n4dskh13hhpu5vfctr4t0k.apps.googleusercontent.com";
-                google.ClientSecret = "toriEyAkzGy4L2cCeQxGldzb";
+                google.ClientId = Configuration.GetValue<string>("ExternalAuthentication:googleClientId");
+                google.ClientSecret = Configuration.GetValue<string>("ExternalAuthentication:googleClientSecret");
             });
 
 
