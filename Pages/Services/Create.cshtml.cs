@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,8 @@ namespace SparkAuto.Pages.Services
     {
         private readonly ApplicationDbContext _db;
         private readonly IEmailSender _emailSender;
+
+        public List<ApplicationUser> Users { get; set; }
 
         [BindProperty]
         public CarServiceModelView CarServiceModelView { get; set; }
@@ -92,14 +96,16 @@ namespace SparkAuto.Pages.Services
                 }
 
                 _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
-                var userEmail = _db.ApplicationUser
-                    .Where(x => x.Id == CarServiceModelView.Car.UserId)
-                    .Select(x => x.Email)
-                    .ToString().Trim();
-                //
-                // var message = new EmailMessage("genage08@yahoo.com", "Your car is ready for pick up", "Repairs Completed");
-                //
-                // await _emailSender.SendEmailAsync(message);
+
+                Users = _db.ApplicationUser.ToList();
+
+                var carOwner = Users.Find(u => u.Id == CarServiceModelView.Car.UserId);
+
+                Console.WriteLine(carOwner.Email);
+
+                var message = new EmailMessage(carOwner.Email.Trim(), "Your car is ready for pick up", "Repairs Completed");
+
+                await _emailSender.SendEmailAsync(message);
 
                 await _db.SaveChangesAsync();
 
