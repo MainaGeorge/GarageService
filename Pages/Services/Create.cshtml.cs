@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SparkAuto.Data;
+using SparkAuto.EmailServices;
 using SparkAuto.Models;
 using SparkAuto.Models.ViewModel;
 using SparkAuto.StaticDetailsUtilities;
@@ -16,13 +17,15 @@ namespace SparkAuto.Pages.Services
     public class CreateModel : PageModel
     {
         private readonly ApplicationDbContext _db;
+        private readonly IEmailSender _emailSender;
 
         [BindProperty]
         public CarServiceModelView CarServiceModelView { get; set; }
 
-        public CreateModel(ApplicationDbContext db)
+        public CreateModel(ApplicationDbContext db, IEmailSender emailSender)
         {
             _db = db;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> OnGet(int carId)
@@ -89,6 +92,14 @@ namespace SparkAuto.Pages.Services
                 }
 
                 _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
+                var userEmail = _db.ApplicationUser
+                    .Where(x => x.Id == CarServiceModelView.Car.UserId)
+                    .Select(x => x.Email)
+                    .ToString().Trim();
+                //
+                // var message = new EmailMessage("genage08@yahoo.com", "Your car is ready for pick up", "Repairs Completed");
+                //
+                // await _emailSender.SendEmailAsync(message);
 
                 await _db.SaveChangesAsync();
 

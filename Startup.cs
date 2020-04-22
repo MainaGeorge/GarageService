@@ -6,6 +6,8 @@ using SparkAuto.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SparkAuto.EmailServices;
+using SparkAuto.Models;
 
 namespace SparkAuto
 {
@@ -21,6 +23,14 @@ namespace SparkAuto
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var emailConfigurations = Configuration.GetSection("EmailConfigurations")
+                .Get<EmailConfigurations>();
+
+            services.AddSingleton(emailConfigurations);
+
+            services.AddScoped<IEmailSender, EmailSender>();
+
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -47,6 +57,7 @@ namespace SparkAuto
                 google.ClientSecret = Configuration.GetValue<string>("ExternalAuthentication:googleClientSecret");
             });
 
+            
 
             services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
