@@ -102,8 +102,9 @@ namespace SparkAuto.Pages.Services
                 var carOwner = Users.Find(u => u.Id == CarServiceModelView.Car.UserId);
 
                 Console.WriteLine(carOwner.Email);
+                var messageTemplate = new MessageTemplate(user: carOwner, car: CarServiceModelView.Car);
 
-                var message = new EmailMessage(carOwner.Email.Trim(), "Your car is ready for pick up", "Repairs Completed");
+                var message = new EmailMessage(carOwner.Email.Trim(), messageTemplate.Message, "Repairs Completed");
 
                 await _emailSender.SendEmailAsync(message);
 
