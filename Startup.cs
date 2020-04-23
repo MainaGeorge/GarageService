@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SparkAuto.EmailServices;
-using SparkAuto.Models;
 
 namespace SparkAuto
 {
@@ -28,7 +27,6 @@ namespace SparkAuto
 
             services.AddSingleton(emailConfigurations);
 
-            services.AddScoped<IEmailSender, EmailSender>();
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -57,7 +55,9 @@ namespace SparkAuto
                 google.ClientSecret = Configuration.GetValue<string>("ExternalAuthentication:googleClientSecret");
             });
 
-            
+
+            services.AddScoped<IEmailSender, EmailSender>();
+
 
             services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();

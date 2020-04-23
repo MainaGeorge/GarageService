@@ -25,6 +25,17 @@ namespace SparkAuto.EmailServices
             await SendAsync(mailMessage);
         }
 
+        private MimeMessage CreateEmailMessage(EmailMessage message)
+        {
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_config.From));
+            emailMessage.To.Add(new MailboxAddress(message.To));
+            emailMessage.Subject = message.Subject;
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+
+            return emailMessage;
+        }
+
         private async Task SendAsync(MimeMessage mailMessage)
         {
             using var client = new SmtpClient();
@@ -73,15 +84,6 @@ namespace SparkAuto.EmailServices
             }
         }
 
-        private MimeMessage CreateEmailMessage(EmailMessage message)
-        {
-            var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress(_config.From));
-            emailMessage.To.Add(new MailboxAddress(message.To));
-            emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
 
-            return emailMessage;
-        }
     }
 }

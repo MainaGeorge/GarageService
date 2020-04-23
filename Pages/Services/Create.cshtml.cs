@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +19,10 @@ namespace SparkAuto.Pages.Services
         private readonly ApplicationDbContext _db;
         private readonly IEmailSender _emailSender;
 
-        public List<ApplicationUser> Users { get; set; }
+        public ApplicationUser Customer { get; set; }
+
+        [TempData]
+        public string Message { get; set; }
 
         [BindProperty]
         public CarServiceModelView CarServiceModelView { get; set; }
@@ -82,31 +83,31 @@ namespace SparkAuto.Pages.Services
 
                 await _db.SaveChangesAsync();
 
-                foreach (var service in CarServiceModelView.ServiceShoppingCartList)
-                {
-                    var serviceDetails = new ServiceDetails
+                foreach (var serviceDetails in CarServiceModelView.ServiceShoppingCartList
+                    .Select(service => new ServiceDetails
                     {
                         ServiceHeaderId = CarServiceModelView.ServiceHeader.Id,
                         ServicePrice = service.ServiceType.Price,
                         ServiceName = service.ServiceType.Name,
                         ServiceTypeId = service.ServiceTypeId
-                    };
+                    }))
+                {
                     _db.ServiceDetails.Add(serviceDetails);
-
                 }
 
                 _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
 
-                Users = _db.ApplicationUser.ToList();
+                Customer = await _db.ApplicationUser.FirstOrDefaultAsync(user =>
+                    user.Id == CarServiceModelView.Car.UserId);
 
-                var carOwner = Users.Find(u => u.Id == CarServiceModelView.Car.UserId);
 
-                Console.WriteLine(carOwner.Email);
-                var messageTemplate = new MessageTemplate(user: carOwner, car: CarServiceModelView.Car);
+                var messageTemplate = new MessageTemplate(user: Customer, car: CarServiceModelView.Car);
 
-                var message = new EmailMessage(carOwner.Email.Trim(), messageTemplate.Message, "Repairs Completed");
+                var message = new EmailMessage(Customer.Email.Trim(), messageTemplate.Message, "Repairs Completed");
 
                 await _emailSender.SendEmailAsync(message);
+
+                Message = $"An email has been sent to {Customer.Name}.";
 
                 await _db.SaveChangesAsync();
 
