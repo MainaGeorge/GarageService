@@ -65,56 +65,53 @@ namespace SparkAuto.Pages.Services
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
-                CarServiceModelView.ServiceHeader.DateAdded = DateTime.Now;
+            if (!ModelState.IsValid) return Page();
 
-                CarServiceModelView.ServiceShoppingCartList =
-                    _db.ServiceShoppingCart.Include(c => c.ServiceType)
-                        .Where(c => c.CarId == CarServiceModelView.Car.Id)
-                        .ToList();
+            CarServiceModelView.ServiceHeader.DateAdded = DateTime.Now;
 
-                CarServiceModelView.ServiceHeader.TotalPrice = CarServiceModelView.ServiceShoppingCartList
-                    .Sum(s => s.ServiceType.Price);
+            CarServiceModelView.ServiceShoppingCartList =
+                _db.ServiceShoppingCart.Include(c => c.ServiceType)
+                    .Where(c => c.CarId == CarServiceModelView.Car.Id)
+                    .ToList();
 
-                CarServiceModelView.ServiceHeader.CarId = CarServiceModelView.Car.Id;
+            CarServiceModelView.ServiceHeader.TotalPrice = CarServiceModelView.ServiceShoppingCartList
+                .Sum(s => s.ServiceType.Price);
 
-                _db.ServiceHeader.Add(CarServiceModelView.ServiceHeader);
+            CarServiceModelView.ServiceHeader.CarId = CarServiceModelView.Car.Id;
 
-                await _db.SaveChangesAsync();
+            _db.ServiceHeader.Add(CarServiceModelView.ServiceHeader);
 
-                foreach (var serviceDetails in CarServiceModelView.ServiceShoppingCartList
-                    .Select(service => new ServiceDetails
-                    {
-                        ServiceHeaderId = CarServiceModelView.ServiceHeader.Id,
-                        ServicePrice = service.ServiceType.Price,
-                        ServiceName = service.ServiceType.Name,
-                        ServiceTypeId = service.ServiceTypeId
-                    }))
+            await _db.SaveChangesAsync();
+
+            foreach (var serviceDetails in CarServiceModelView.ServiceShoppingCartList
+                .Select(service => new ServiceDetails
                 {
-                    _db.ServiceDetails.Add(serviceDetails);
-                }
-
-                _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
-
-                Customer = await _db.ApplicationUser.FirstOrDefaultAsync(user =>
-                    user.Id == CarServiceModelView.Car.UserId);
-
-
-                var messageTemplate = new MessageTemplate(user: Customer, car: CarServiceModelView.Car);
-
-                var message = new EmailMessage(Customer.Email.Trim(), messageTemplate.Message, "Repairs Completed");
-
-                await _emailSender.SendEmailAsync(message);
-
-                Message = $"An email has been sent to {Customer.Name}.";
-
-                await _db.SaveChangesAsync();
-
-                return RedirectToPage("../Cars/Index", new { userId = CarServiceModelView.Car.UserId });
+                    ServiceHeaderId = CarServiceModelView.ServiceHeader.Id,
+                    ServicePrice = service.ServiceType.Price,
+                    ServiceName = service.ServiceType.Name,
+                    ServiceTypeId = service.ServiceTypeId
+                }))
+            {
+                _db.ServiceDetails.Add(serviceDetails);
             }
 
-            return Page();
+            _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
+
+            Customer = await _db.ApplicationUser.FirstOrDefaultAsync(user =>
+                user.Id == CarServiceModelView.Car.UserId);
+
+
+            var messageTemplate = new MessageTemplate(user: Customer, car: CarServiceModelView.Car);
+
+            var message = new EmailMessage(Customer.Email.Trim(), messageTemplate.Message, "Repairs Completed");
+
+            await _emailSender.SendEmailAsync(message);
+
+            Message = $"An email has been sent to {Customer.Name}.";
+
+            await _db.SaveChangesAsync();
+
+            return RedirectToPage("../Cars/Index", new { userId = CarServiceModelView.Car.UserId });
 
 
         }
