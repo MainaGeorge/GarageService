@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SparkAuto.Data;
 using SparkAuto.Models;
 
 namespace SparkAuto.Areas.Identity.Pages.Account
@@ -17,16 +19,20 @@ namespace SparkAuto.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _db;
 
         public LoginModel(SignInManager<IdentityUser> signInManager,
-            ILogger<LoginModel> logger)
+            ILogger<LoginModel> logger, ApplicationDbContext db)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _db = db;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -80,8 +86,18 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    ApplicationUser = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == Input.Email);
+
+                    if (ApplicationUser.EmailConfirmed)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
+                        StatusMessage = "Please check your email account and confirm your email address";
+                        return Page();
+                    }
                 }
                 if (result.RequiresTwoFactor)
                 {
