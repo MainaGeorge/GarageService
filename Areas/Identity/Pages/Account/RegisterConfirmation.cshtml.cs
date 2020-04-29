@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using SparkAuto.Data;
 using SparkAuto.EmailServices;
+using SparkAuto.Models;
 
 namespace SparkAuto.Areas.Identity.Pages.Account
 {
@@ -14,17 +17,18 @@ namespace SparkAuto.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _sender;
+        private readonly ApplicationDbContext _db;
 
-        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
+        public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender, ApplicationDbContext db)
         {
             _userManager = userManager;
             _sender = sender;
+            _db = db;
         }
 
         public string Email { get; set; }
 
-        public bool DisplayConfirmAccountLink { get; set; }
-
+        public ApplicationUser ApplicationUser { get; set; }
         public string EmailConfirmationUrl { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string email)
@@ -41,7 +45,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
             }
 
             Email = email;
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
+            ApplicationUser = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == Email);
+
 
 
             var userId = await _userManager.GetUserIdAsync(user);
@@ -53,7 +58,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = userId, code = code },
                 protocol: Request.Scheme);
 
-            await _sender.SendEmailAsync(new EmailMessage(Email, EmailConfirmationUrl, "confirm Email"));
+            var content = MessageTemplate.ConfirmEmail(ApplicationUser, EmailConfirmationUrl);
+            await _sender.SendEmailAsync(new EmailMessage(Email, content, "Confirm Email"));
 
 
 
