@@ -9883,11 +9883,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\genag\\OneDrive\\Desktop\\current projects\\GarageService\\SparkAuto.csproj",
+      "projectUniqueName": "C:\\Users\\genag\\Source\\Repos\\GarageService\\SparkAuto.csproj",
       "projectName": "SparkAuto",
-      "projectPath": "C:\\Users\\genag\\OneDrive\\Desktop\\current projects\\GarageService\\SparkAuto.csproj",
+      "projectPath": "C:\\Users\\genag\\Source\\Repos\\GarageService\\SparkAuto.csproj",
       "packagesPath": "C:\\Users\\genag\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\genag\\OneDrive\\Desktop\\current projects\\GarageService\\obj\\",
+      "outputPath": "C:\\Users\\genag\\Source\\Repos\\GarageService\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\genag\\AppData\\Roaming\\NuGet\\NuGet.Config",

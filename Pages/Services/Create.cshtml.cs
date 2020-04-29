@@ -97,13 +97,9 @@ namespace SparkAuto.Pages.Services
 
             _db.ServiceShoppingCart.RemoveRange(CarServiceModelView.ServiceShoppingCartList);
 
-            Customer = await _db.ApplicationUser.FirstOrDefaultAsync(user =>
-                user.Id == CarServiceModelView.Car.UserId);
+            Customer = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == CarServiceModelView.Car.UserId);
 
-
-            var messageTemplate = new MessageTemplate(user: Customer, car: CarServiceModelView.Car);
-
-            var message = new EmailMessage(Customer.Email.Trim(), messageTemplate.Message, "Repairs Completed");
+            var message = new EmailMessage(Customer.Email.Trim(), MessageTemplate.Message(Customer, CarServiceModelView.Car), "Repairs Completed");
 
             await _emailSender.SendEmailAsync(message);
 

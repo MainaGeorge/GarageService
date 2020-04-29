@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "awYi/YWRmWKzsaziWYdX5hhlQpaSad0qLs0DiQidlXwwu37wArD1sIBQZIknDYtdAH3pepfqX1LkPm8iOHooyA==",
+  "dgSpecHash": "k+cCY+cJZ3xglG/4eotC5Vpc6fxH9OhpAKyipYduYqWx0MA7oaN5pQVlIu//pdsQObivbReRULMpDV0oxmaRlA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\genag\\OneDrive\\Desktop\\current projects\\GarageService\\SparkAuto.csproj",
+  "projectFilePath": "C:\\Users\\genag\\Source\\Repos\\GarageService\\SparkAuto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\genag\\.nuget\\packages\\google.apis\\1.45.0\\google.apis.1.45.0.nupkg.sha512",
     "C:\\Users\\genag\\.nuget\\packages\\google.apis.core\\1.45.0\\google.apis.core.1.45.0.nupkg.sha512",
