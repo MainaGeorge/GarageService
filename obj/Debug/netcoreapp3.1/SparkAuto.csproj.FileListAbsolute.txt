@@ -2006,3 +2006,4 @@ C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\staticwebasset
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.dll
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.pdb
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.genruntimeconfig.cache
+C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache

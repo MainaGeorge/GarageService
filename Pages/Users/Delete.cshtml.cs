@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,11 +46,22 @@ namespace SparkAuto.Pages.Users
 
         public async Task<IActionResult> OnPost()
         {
+
+
             var userDb = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == ApplicationUser.Email);
 
             if (userDb == null)
             {
                 return NotFound();
+            }
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var loggedAdminId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (loggedAdminId == userDb.Id)
+            {
+                Message = "You can not delete yourself!";
+
+                return RedirectToPage("Index");
             }
 
             var userCars = _db.Car.Where(car => car.UserId == userDb.Id);
