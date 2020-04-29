@@ -121,11 +121,13 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        Message = "User logged in successfully";
-                        await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToPage("/Account/RegisterConfirmation", new { email = user.Email });
 
-                        return LocalRedirect(returnUrl);
+                        // Message = "User logged in successfully";
+                        // await _userManager.AddToRoleAsync(user, StaticDetails.CustomerEndUser);
+                        // await _signInManager.SignInAsync(user, isPersistent: false);
+                        //
+                        // return LocalRedirect(returnUrl);
                     }
 
 
