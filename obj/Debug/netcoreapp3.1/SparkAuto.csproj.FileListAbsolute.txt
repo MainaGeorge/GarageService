@@ -1500,3 +1500,4 @@ C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcore
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.dll
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.pdb
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.genruntimeconfig.cache
+C:\Users\genag\OneDrive\Desktop\current projects\GarageService\bin\Debug\netcoreapp3.1\libman.json
