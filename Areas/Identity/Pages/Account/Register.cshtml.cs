@@ -121,6 +121,8 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        await _userManager.AddToRoleAsync(user, StaticDetails.AdminEndUser);
+
                         return RedirectToPage("/Account/RegisterConfirmation", new { email = user.Email });
 
                         // Message = "User logged in successfully";
