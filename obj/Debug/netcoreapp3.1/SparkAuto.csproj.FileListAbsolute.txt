@@ -1923,7 +1923,6 @@ C:\Users\genag\Source\Repos\GarageService\bin\Debug\netcoreapp3.1\runtimes\win-x
 C:\Users\genag\Source\Repos\GarageService\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\genag\Source\Repos\GarageService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\genag\Source\Repos\GarageService\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csproj.CoreCompileInputs.cache
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\genag\Source\Repos\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.MvcApplicationPartsAssemblyInfo.cache
