@@ -12,6 +12,8 @@ namespace SparkAuto.Models
 
         public int CarId { get; set; }
 
+        public bool IsPaid { get; set; }
+
         [Required]
         public double TotalPrice { get; set; }
 
