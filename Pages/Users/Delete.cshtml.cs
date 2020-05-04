@@ -59,7 +59,7 @@ namespace SparkAuto.Pages.Users
             var loggedAdminId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (loggedAdminId == userDb.Id)
             {
-                Message = "You can not delete yourself!";
+                Message = "Error! You can not delete yourself!";
 
                 return RedirectToPage("Index");
             }
