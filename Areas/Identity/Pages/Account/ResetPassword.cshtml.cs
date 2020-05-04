@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using SparkAuto.Data;
 
 namespace SparkAuto.Areas.Identity.Pages.Account
 {
@@ -16,10 +18,12 @@ namespace SparkAuto.Areas.Identity.Pages.Account
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _db;
 
-        public ResetPasswordModel(UserManager<IdentityUser> userManager)
+        public ResetPasswordModel(UserManager<IdentityUser> userManager, ApplicationDbContext db)
         {
             _userManager = userManager;
+            _db = db;
         }
 
         [BindProperty]
@@ -67,7 +71,7 @@ namespace SparkAuto.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Email == Input.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
