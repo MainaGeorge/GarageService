@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SparkAuto.EmailServices;
-using SparkAuto.Models;
+using Stripe;
 
 namespace SparkAuto
 {
@@ -28,6 +28,7 @@ namespace SparkAuto
 
             services.AddSingleton(emailConfigurations);
 
+            services.Configure<StripeSettings.StripeSettings>(Configuration.GetSection("Stripe"));
 
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -79,6 +80,8 @@ namespace SparkAuto
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            StripeConfiguration.ApiKey = Configuration["Stripe:SecretKey"];
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
