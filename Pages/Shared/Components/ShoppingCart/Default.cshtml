@@ -1,3 +1,19 @@
 ﻿@model int
 
-<i class="fas fa-shopping-cart"><span class="text-danger">@Model</span></i>
+@if (Model > 0)
+{
+    <a class="nav-link text-light" asp-area="">
+
+        <i class="fas fa-shopping-cart"></i>&nbsp;<span class="badge badge-danger">@Model</span>
+    </a>
+
+
+}
+else
+{
+    <a class="nav-link text-light" href="#">
+
+        <i class="fas fa-shopping-cart"></i>&nbsp;<span class="badge badge-danger">@Model</span>
+    </a>
+}
+

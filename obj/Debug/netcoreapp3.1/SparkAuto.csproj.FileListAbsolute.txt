@@ -2516,3 +2516,4 @@ C:\Users\genag\OneDrive\Documents\GarageService\obj\Debug\netcoreapp3.1\staticwe
 C:\Users\genag\OneDrive\Documents\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.dll
 C:\Users\genag\OneDrive\Documents\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.pdb
 C:\Users\genag\OneDrive\Documents\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.genruntimeconfig.cache
+C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\Components\ShoppingCart\Default.cshtml.g.cs
