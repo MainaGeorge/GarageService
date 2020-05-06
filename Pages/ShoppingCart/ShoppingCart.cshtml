@@ -1,4 +1,9 @@
 ﻿@page
+@using Microsoft.Extensions.Options
+@using Stripe
+
+@inject IOptions<SparkAuto.StripeSettings.StripeSettings> Stripe
+
 @model SparkAuto.Pages.ShoppingCart.ShoppingCartModel
 @{
     ViewData["Title"] = "ShoppingCart";
@@ -11,7 +16,7 @@
             <div>@await Component.InvokeAsync("ShoppingCart")</div>
             <div>
                 <a class="nav-link text-light" href="#">
-                    <h4>Total: @Model.ShoppingCartViewModel.TotalPrice</h4>
+                    <h4>Total: @Model.ShoppingCartViewModel.TotalPrice.ToString("C")</h4>
                 </a>
             </div>
         </div>
@@ -21,33 +26,34 @@
                 <h4 class="text-muted">Date Performed @serviceHeader.DateAdded.ToShortDateString()</h4>
                 <table class="table table-striped border mx-0 pb-4" style="width: 100%">
                     <thead>
-                    <tr class="table-secondary">
-                        <th>Service Name</th>
-                        <th>Price</th>
-                    </tr>
+                        <tr class="table-secondary">
+                            <th>Service Name</th>
+                            <th>Price</th>
+                        </tr>
                     </thead>
                     <tbody class="bg-info text-light">
-                    @foreach (var details in Model.ShoppingCartViewModel.ServiceDetails.Where(c => c.Key == serviceHeader.Id))
-                    {
-                        foreach (var sDetails in details.Value)
+                        @foreach (var details in Model.ShoppingCartViewModel.ServiceDetails.Where(c => c.Key == serviceHeader.Id))
                         {
-                            <tr>
-                                <td>@sDetails.ServiceName</td>
-                                <td>@sDetails.ServicePrice</td>
-                            </tr>      
+                            foreach (var sDetails in details.Value)
+                            {
+                                <tr>
+                                    <td>@sDetails.ServiceName</td>
+                                    <td>@sDetails.ServicePrice</td>
+                                </tr>
+
+                            }
+
                         }
-                        
-                    }
                     </tbody>
                 </table>
             }
-            
+
         </div>
         <div class="card-footer">
-            <a class="btn btn-primary form-control my-1 text-light">Stripe Checkout</a>
+            <a class="btn btn-primary form-control my-1 text-light" asp-page="./StripeCheckout">Stripe Checkout</a>
             <a class="btn btn-primary form-control my-1 text-light">Paypal Checkout</a>
-        </div>
-    </div>
 
-</div>
+        </div>
+
+    </div>
 

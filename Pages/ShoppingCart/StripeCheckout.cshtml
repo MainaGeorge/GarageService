@@ -1,0 +1,32 @@
+﻿@page
+@model SparkAuto.Pages.ShoppingCart.StripeCheckoutModel
+
+@using Microsoft.Extensions.Options
+@using SparkAuto.StripeSettings
+@inject IOptions<StripeSettings> Stripe
+
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<form method="POST">
+    <article>
+        <p class="text-muted">Follow this link to stripe payment</p>
+    </article>
+    <script src="//checkout.stripe.com/v2/checkout.js"
+            class="stripe-button"
+            data-key="@Stripe.Value.PublishableKey"
+            data-locale="auto"
+            data-description="Sample Charge"
+            data-amount="500">
+    </script>
+</form>
+
+
+
+@section scripts{
+    <script src="https://js.stripe.com/v3/"></script>
+}

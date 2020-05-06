@@ -81,7 +81,7 @@ namespace SparkAuto
                 app.UseHsts();
             }
 
-            StripeConfiguration.ApiKey = Configuration["Stripe:SecretKey"];
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
