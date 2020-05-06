@@ -16,17 +16,15 @@ namespace SparkAuto.Pages.ShoppingCart
     {
         private readonly ApplicationDbContext _db;
 
-        public long? AmountToBePaid { get; set; }
+        private readonly PaymentDetails _paymentDetails;
 
-        public string TransactionId { get; set; }
-
-        public string Description { get; set; }
-
-        public List<ServiceHeader> UnpaidServices { get; set; } = new List<ServiceHeader>();
+        public List<ServiceHeader> UnpaidServices { get; set; }
 
         public StripeCheckoutModel(ApplicationDbContext db)
         {
             _db = db;
+            _paymentDetails = new PaymentDetails();
+            UnpaidServices = new List<ServiceHeader>();
         }
         public IActionResult OnGet()
         {
@@ -43,9 +41,9 @@ namespace SparkAuto.Pages.ShoppingCart
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            var userId = claim.Value;
+            _paymentDetails.CustomerId = claim.Value;
 
-            var cars = await _db.Car.Where(c => c.UserId == userId).Select(c => c.Id).ToListAsync();
+            var cars = await _db.Car.Where(c => c.UserId == _paymentDetails.CustomerId).Select(c => c.Id).ToListAsync();
 
             foreach (var car in cars)
             {
@@ -53,11 +51,8 @@ namespace SparkAuto.Pages.ShoppingCart
                     .ToListAsync();
                 UnpaidServices.AddRange(serviceHeaders);
             }
-            AmountToBePaid = (long?)UnpaidServices.Sum(c => c.TotalPrice);
+            _paymentDetails.Amount = (long?)UnpaidServices.Sum(c => c.TotalPrice);
 
-
-            Console.WriteLine(AmountToBePaid);
-            Console.WriteLine(UnpaidServices.Count);
 
             var customers = new CustomerService();
             var charges = new ChargeService();
@@ -72,7 +67,7 @@ namespace SparkAuto.Pages.ShoppingCart
 
             var charge = charges.Create(new ChargeCreateOptions
             {
-                Amount = AmountToBePaid,
+                Amount = _paymentDetails.Amount,
                 Description = "Payment to SparkAuto garage",
                 Currency = "pln",
                 Customer = customer.Id
@@ -81,12 +76,20 @@ namespace SparkAuto.Pages.ShoppingCart
 
             if (charge.Status == "succeeded")
             {
-                //store the transactionid, amount, customerId, transactiondescription, currency in a new table
-                TransactionId = charge.BalanceTransactionId;
-                Description = charge.Description;
+                _paymentDetails.TransactionId = charge.BalanceTransactionId;
+                _paymentDetails.Description = charge.Description;
+                _paymentDetails.Currency = charge.Currency;
 
 
-                //change the status of paid in serviceHeader to true;
+                foreach (var unpaidService in UnpaidServices)
+                {
+                    var serviceFromDb = await _db.ServiceHeader.FindAsync(unpaidService.Id);
+                    serviceFromDb.IsPaid = true;
+                }
+
+                await _db.PaymentDetails.AddAsync(_paymentDetails);
+
+                await _db.SaveChangesAsync();
 
 
                 return RedirectToPage("../Index");
