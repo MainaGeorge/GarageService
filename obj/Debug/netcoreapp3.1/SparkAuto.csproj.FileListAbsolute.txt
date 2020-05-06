@@ -2520,3 +2520,4 @@ C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcore
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ShoppingCart\ShoppingCart.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\Razor\Pages\ShoppingCart\StripeCheckout.cshtml.g.cs
 C:\Users\genag\OneDrive\Desktop\current projects\GarageService\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\genag\OneDrive\Desktop\current projects\GarageService\obj\Debug\netcoreapp3.1\SparkAuto.csprojAssemblyReference.cache
