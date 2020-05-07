@@ -64,6 +64,15 @@ namespace SparkAuto.Pages.Users
                 return RedirectToPage("Index");
             }
 
+            var userTransactions = _db.PaymentDetails.Where(c => c.CustomerId == userDb.Id);
+            if (userTransactions.Any())
+            {
+                foreach (var transaction in userTransactions)
+                {
+                    _db.PaymentDetails.Remove(transaction);
+                }
+            }
+
             var userCars = _db.Car.Where(car => car.UserId == userDb.Id);
 
             if (userCars.Any())
