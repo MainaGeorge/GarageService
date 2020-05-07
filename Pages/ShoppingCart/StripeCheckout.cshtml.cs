@@ -3,20 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using SparkAuto.Data;
 using SparkAuto.Models;
 using Stripe;
 
 namespace SparkAuto.Pages.ShoppingCart
 {
+    [Authorize]
     public class StripeCheckoutModel : PageModel
     {
         private readonly ApplicationDbContext _db;
 
         private readonly PaymentDetails _paymentDetails;
+
+        [TempData]
+        public string Message { get; set; }
 
         public List<ServiceHeader> UnpaidServices { get; set; }
 
@@ -69,7 +75,7 @@ namespace SparkAuto.Pages.ShoppingCart
             {
                 Amount = _paymentDetails.Amount,
                 Description = "Payment to SparkAuto garage",
-                Currency = "pln",
+                Currency = "usd",
                 Customer = customer.Id
             });
 
@@ -91,12 +97,14 @@ namespace SparkAuto.Pages.ShoppingCart
 
                 await _db.SaveChangesAsync();
 
+                Message = "Payment Successful";
 
                 return RedirectToPage("../Index");
             }
             else
             {
-                return RedirectToPage("Error");
+                Message = "Error, Something went wrong while processing your payment";
+                return RedirectToPage("../Index");
             }
 
         }

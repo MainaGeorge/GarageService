@@ -6,8 +6,11 @@ namespace SparkAuto.EmailServices
     {
         public static string Message(ApplicationUser user, Car car) =>
             $"Dear {user.Name}, \nWe are pleased to inform you that your vehicle {car.Make.ToUpper()} {car.Model.ToUpper()}, " +
-            $"\nwith the registration number {car.RegistrationNumber.ToUpper()} has been successfully serviced as per your request.\n" +
-            $"You can collect it any time Monday-Friday from 9 a.m to 6 p.m.\n\n\nKind regards, \nThe SparkAuto Garage Team.";
+            $"\nwith the registration number {car.RegistrationNumber.ToUpper()} is ready to get back on the road.\nWe " +
+            $"invite you to log in into our webpage and check whether all the services performed were as per your request. \nWe also offer" +
+            $"the opportunity to pay for the services online, that way you need only come and get your vehicle, no unnecessary queues " +
+            $"Feel free to contact us at any time during our working hours, Monday-Friday from 9 a.m to 6 p.m." +
+            $"\n\n\nKind regards, \nThe SparkAuto Garage Team.";
 
         public static string ConfirmEmail(ApplicationUser user, string token) =>
             $"Dear {user.Name}, \nThank you for registering with our service. We are pleased to have you on board!\n " +

@@ -16,7 +16,7 @@
             <div>@await Component.InvokeAsync("ShoppingCart")</div>
             <div>
                 <a class="nav-link text-light" href="#">
-                    <h4>Total: @Model.ShoppingCartViewModel.TotalPrice.ToString("C")</h4>
+                    <h4>Amount: @Model.ShoppingCartViewModel.TotalPrice.ToString("C")</h4>
                 </a>
             </div>
         </div>
@@ -49,7 +49,7 @@
             }
 
         </div>
-        <div class="card-footer">
+        <div class="card-footer bg-success">
             <a class="btn btn-primary form-control my-1 text-light" asp-page="./StripeCheckout">Stripe Checkout</a>
             <a class="btn btn-primary form-control my-1 text-light">Paypal Checkout</a>
 
