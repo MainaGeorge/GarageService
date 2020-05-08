@@ -10,6 +10,8 @@ namespace SparkAuto.Models
 
         public string CustomerId { get; set; }
 
+        public string CustomerName { get; set; }
+
         public string TransactionId { get; set; }
 
         public string Description { get; set; }

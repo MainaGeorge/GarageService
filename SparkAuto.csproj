@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200508104706_addingCustomername.cs" />
+    <Compile Remove="Data\Migrations\20200508104706_addingCustomername.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Google.Apis" Version="1.45.0" />
     <PackageReference Include="Google.Apis.Core" Version="1.45.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.3" />
