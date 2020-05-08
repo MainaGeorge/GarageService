@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using SparkAuto.Models.ViewModel;
 
 namespace SparkAuto.Pages.ShoppingCart
 {
+    [Authorize]
     public class ShoppingCartModel : PageModel
     {
         private readonly ApplicationDbContext _db;

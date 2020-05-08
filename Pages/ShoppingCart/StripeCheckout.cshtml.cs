@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using SparkAuto.Data;
 using SparkAuto.Models;
 using Stripe;
@@ -44,41 +42,11 @@ namespace SparkAuto.Pages.ShoppingCart
         public async Task<IActionResult> OnPost(string stripeEmail, string stripeToken)
         {
 
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            UnpaidServices = await GetUnpaidServices();
 
-            _paymentDetails.CustomerId = claim.Value;
-
-            var cars = await _db.Car.Where(c => c.UserId == _paymentDetails.CustomerId).Select(c => c.Id).ToListAsync();
-
-            foreach (var car in cars)
-            {
-                var serviceHeaders = await _db.ServiceHeader.Where(c => c.CarId == car && !c.IsPaid)
-                    .ToListAsync();
-                UnpaidServices.AddRange(serviceHeaders);
-            }
             _paymentDetails.Amount = (long?)UnpaidServices.Sum(c => c.TotalPrice);
 
-
-            var customers = new CustomerService();
-            var charges = new ChargeService();
-
-
-            var customer = customers.Create(new CustomerCreateOptions
-            {
-                Email = stripeEmail,
-                Source = stripeToken
-
-            });
-
-            var charge = charges.Create(new ChargeCreateOptions
-            {
-                Amount = _paymentDetails.Amount,
-                Description = "Payment to SparkAuto garage",
-                Currency = "usd",
-                Customer = customer.Id
-            });
-
+            var charge = await GetCharges(stripeEmail, stripeToken);
 
             if (charge.Status == "succeeded")
             {
@@ -107,6 +75,50 @@ namespace SparkAuto.Pages.ShoppingCart
                 return RedirectToPage("../Index");
             }
 
+        }
+
+        private async Task<List<ServiceHeader>> GetUnpaidServices()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            _paymentDetails.CustomerId = claim.Value;
+
+            var cars = await _db.Car.Where(c => c.UserId == _paymentDetails.CustomerId).Select(c => c.Id).ToListAsync();
+
+            foreach (var car in cars)
+            {
+                var serviceHeaders = await _db.ServiceHeader.Where(c => c.CarId == car && !c.IsPaid)
+                    .ToListAsync();
+                UnpaidServices.AddRange(serviceHeaders);
+            }
+
+            return UnpaidServices;
+
+        }
+
+        private async Task<Charge> GetCharges(string stripeEmail, string stripeToken)
+        {
+            var customers = new CustomerService();
+            var charges = new ChargeService();
+
+
+            var customer = await customers.CreateAsync(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                Source = stripeToken
+
+            });
+
+            var charge = await charges.CreateAsync(new ChargeCreateOptions
+            {
+                Amount = _paymentDetails.Amount * 100, //stripe takes amounts in cents, multiply by 100 to bring it to the right amount;
+                Description = "Payment to SparkAuto garage",
+                Currency = "usd",
+                Customer = customer.Id
+            });
+
+            return charge;
         }
     }
 
